@@ -43,6 +43,7 @@ jar {
   }
 }
 shadowJar {
+  archiveFileName = "server.jar"
   manifest {
     attributes "Main-Class": mainClassName
   }
