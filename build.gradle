@@ -1,0 +1,54 @@
+plugins {
+  id 'java'
+  id 'application'
+  id 'com.github.johnrengelman.shadow' version '7.0.0'
+}
+
+repositories {
+  mavenCentral()
+}
+
+group 'com.server'
+version '1.0.0-SNAPSHOT'
+
+ext {
+  vertxVersion = '4.5.1'
+  junitJupiterVersion = '5.9.1'
+  rxJavaVersion = '3.1.8'
+  lombokVersion = '1.18.30'
+  gsonVersion = '2.10.1'
+  nettyVersion = '4.1.91.Final'
+}
+
+dependencies {
+  implementation "io.vertx:vertx-web-client:$vertxVersion"
+  implementation "io.vertx:vertx-web:$vertxVersion"
+  implementation "io.vertx:vertx-junit5:$vertxVersion"
+  testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
+  testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+  implementation "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
+  implementation "org.projectlombok:lombok:$lombokVersion"
+  implementation "com.google.code.gson:gson:$gsonVersion"
+  implementation "io.netty:netty-resolver-dns-native-macos:$nettyVersion:osx-x86_64"
+}
+
+mainClassName = 'Application'
+
+jar {
+  manifest {
+    attributes(
+      'Main-Class': mainClassName,
+      'Main-Verticle': project.absoluteProjectPath('src/main/java/ttmm/Application.java')
+    )
+  }
+}
+shadowJar {
+  manifest {
+    attributes "Main-Class": mainClassName
+  }
+}
+
+test {
+  useJUnitPlatform()
+}
+
