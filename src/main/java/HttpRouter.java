@@ -16,7 +16,7 @@ public class HttpRouter extends AbstractVerticle {
 
     router.mountSubRouter("/user", UserRouter.INSTANCE.router(vertx));
 
-    vertx.createHttpServer().requestHandler(router).listen(8888);
+    vertx.createHttpServer().requestHandler(router).listen(8080);
 
     System.out.println("Application started on port 8888");
   }
