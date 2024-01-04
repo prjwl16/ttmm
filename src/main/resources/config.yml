@@ -1,0 +1,16 @@
+#//folder structure
+ttmm:
+  src:
+    main:
+      java:
+        Application.java
+  build:
+    classes
+    libs
+    generated
+    tmp
+  gradle:
+    src:
+    main:
+      java:
+        Application.java
