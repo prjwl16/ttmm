@@ -18,7 +18,7 @@ public class HttpRouter extends AbstractVerticle {
 
     vertx.createHttpServer().requestHandler(router).listen(8080);
 
-    System.out.println("Application started on port 8888");
+    System.out.println("Application started on port 8080");
   }
 
 
