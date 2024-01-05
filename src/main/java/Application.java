@@ -1,5 +1,6 @@
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
+import ttmm.database.Psql;
 
 public class Application extends AbstractVerticle {
 
@@ -13,9 +14,10 @@ public class Application extends AbstractVerticle {
     public void start() throws Exception {
         super.start();
         try {
+            Psql.INSTANCE.init(vertx);
             vertx.deployVerticle(HttpRouter.class.getName());
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("ERRROR::: "+e);
         }
     }
 }
