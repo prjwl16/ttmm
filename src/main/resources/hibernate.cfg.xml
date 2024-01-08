@@ -3,7 +3,7 @@
 <hibernate-configuration>
     <session-factory>
         <!-- Your database connection settings -->
-        <property name="hibernate.connection.url">jdbc:postgresql://34.93.134.213:5432/postgres</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://34.93.134.213:5432/dev</property>
         <property name="hibernate.connection.username">prjwl</property>
         <property name="hibernate.connection.password">U[M`EvozL`5$;Cc$</property>
         <property name="hibernate.hbm2ddl.auto">create-drop</property>

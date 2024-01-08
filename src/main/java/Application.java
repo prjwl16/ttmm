@@ -1,9 +1,14 @@
+import io.ebean.Finder;
+import io.ebean.annotation.Platform;
+import io.ebean.datasource.DataSourceConfig;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import org.apache.commons.io.FileUtils;
 
+
 import ttmm.database.DB;
+import ttmm.database.models.User;
 import ttmm.utils.ConfigManager;
 
 import java.io.File;
@@ -17,8 +22,13 @@ public class Application extends AbstractVerticle {
 
 
     public static void main(String[] args) {
-      Vertx vertx = Vertx.vertx();
-      vertx.deployVerticle(new Application());
+        try {
+            Vertx vertx = Vertx.vertx();
+            vertx.deployVerticle(new Application());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -26,27 +36,31 @@ public class Application extends AbstractVerticle {
         super.start();
         try {
             JsonObject config = null;
-            try{
+            try {
                 File file = new File("src/main/resources/config.json");
-                if(file.exists() && !file.isDirectory()){
+                if (file.exists() && !file.isDirectory()) {
                     String json = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
                     config = new JsonObject(json);
-                    System.out.println("config: "+config);
-                }else{
+                    System.out.println("config: " + config);
+                } else {
                     throw new Exception("ERR Config file not found");
                 }
-            }catch (IOException e){
-                System.out.println("ERR Config "+e);
-                throw new Exception("ERR Config "+e);
+            } catch (IOException e) {
+                System.out.println("ERR Config " + e);
+                throw new Exception("ERR Config " + e);
             }
 
             ConfigManager.INSTANCE.init(config);
-
-            DB.INSTANCE.init(vertx);
+            DB.INSTANCE.initializeDatabase();
             vertx.deployVerticle(HttpRouter.class.getName());
+
+//            Finder<Long, User> finder = new Finder<>(User.class);
+//            User user = finder.byId(1L);
+
         } catch (Exception e) {
-            System.out.println("ERR "+e);
-            throw new Exception("ERR "+e);
+            e.printStackTrace();
+            System.out.println("ERR " + e);
+            throw new Exception("ERR " + e);
         }
     }
 

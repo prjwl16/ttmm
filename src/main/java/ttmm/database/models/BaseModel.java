@@ -1,19 +1,23 @@
 package ttmm.database.models;
 
+import io.ebean.Model;
 import io.ebean.annotation.NotNull;
 import io.ebean.annotation.SoftDelete;
 import io.ebean.annotation.WhenCreated;
 import io.ebean.annotation.WhenModified;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.sql.Timestamp;
 
+
+@EqualsAndHashCode(callSuper = false)
 @Data
 @MappedSuperclass
-public class BaseModel {
+public abstract class BaseModel extends Model {
 
     @Id
     @NotNull
