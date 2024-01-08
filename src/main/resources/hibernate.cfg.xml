@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Your database connection settings -->
+        <property name="hibernate.connection.url">jdbc:postgresql://34.93.134.213:5432/postgres</property>
+        <property name="hibernate.connection.username">prjwl</property>
+        <property name="hibernate.connection.password">U[M`EvozL`5$;Cc$</property>
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.show_sql">true</property>
+        <!-- Specify packages containing @Entity classes -->
+        <mapping class="ttmm.database.models.User"/>
+        <!-- More entity mappings -->
+    </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,9 @@
+{
+    "database": {
+        "host": "34.93.134.213",
+        "username": "prjwl",
+        "password": "U[M`EvozL`5$;Cc$",
+        "database": "postgres",
+        "url": "jdbc:postgresql://34.93.134.213:5432/postgres"
+    }
+}
