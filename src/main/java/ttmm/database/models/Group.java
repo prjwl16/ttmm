@@ -6,17 +6,20 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "groups")
+@Table(name = "group")
 public class Group extends BaseModel {
     private String name;
     private String description;
     private String avatar;
+
+    @ManyToMany(mappedBy = "groups")
+    private List<User> users;
 }

@@ -5,6 +5,7 @@ import io.ebean.typequery.PLong;
 import io.ebean.typequery.PString;
 import io.ebean.typequery.PTimestamp;
 import ttmm.database.models.Group;
+import ttmm.database.models.query.QUser;
 
 /**
  * Query bean for Group.
@@ -32,6 +33,7 @@ public final class QGroup extends io.ebean.typequery.TQRootBean<Group,QGroup> {
   public PString<QGroup> name;
   public PString<QGroup> description;
   public PString<QGroup> avatar;
+  public QUser.Assoc<QGroup> users;
 
 
   /**
@@ -103,6 +105,7 @@ public final class QGroup extends io.ebean.typequery.TQRootBean<Group,QGroup> {
     public static PString<QGroup> name = _alias.name;
     public static PString<QGroup> description = _alias.description;
     public static PString<QGroup> avatar = _alias.avatar;
+    public static QUser.Assoc<QGroup> users = _alias.users;
   }
 
   /**  Association query bean */
@@ -116,6 +119,7 @@ public final class QGroup extends io.ebean.typequery.TQRootBean<Group,QGroup> {
     public PString<R> name;
     public PString<R> description;
     public PString<R> avatar;
+    public QUser.Assoc<R> users;
 
     public Assoc(String name, R root) {
       super(name, root);

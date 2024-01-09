@@ -20,5 +20,13 @@ public enum ConfigManager {
         return config.getJsonObject("database");
     }
 
+    public JsonObject getAuthConfig() {
+        return config.getJsonObject("gauth");
+    }
+
+    public int getPort() {
+        return config.getInteger("port");
+    }
+
 
 }

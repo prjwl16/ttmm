@@ -14,16 +14,15 @@ public enum UserRouter implements SubRouterProtocol {
 
     INSTANCE;
 
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(UserRouter.class);
-
     @Override
     public Router router(Vertx vertx) {
         Router router = Router.router(vertx);
-        router.get("/").handler(context -> {
+        router.get().handler(context -> {
             try{
                 Finder<Long, User> finder = new Finder<>(User.class);
-                User user = finder.byId(1L);
-                System.out.println("user: "+user);
+                finder.all().forEach(user->{
+                    System.out.println(user.getEmail());
+                });
                 context.response().end("ok");
             }catch (Exception e){
                 System.out.println("err: "+e);
@@ -32,6 +31,8 @@ public enum UserRouter implements SubRouterProtocol {
         });
 
         router.get("/:id").handler(UserController.INSTANCE::handle);
+
+        router.post("/").handler(UserController.INSTANCE::handlePost);
 
         return router;
     }

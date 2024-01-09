@@ -10,6 +10,8 @@ import io.ebean.migration.MigrationRunner;
 import io.vertx.core.json.JsonObject;
 import ttmm.utils.ConfigManager;
 
+import java.io.IOException;
+
 public enum DataBaseFactory {
 
     INSTANCE;
@@ -26,7 +28,14 @@ public enum DataBaseFactory {
             databaseConfig.setDefaultServer(true);
             DatabaseFactory.create(databaseConfig);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("DB Error:: " + e);
+        }
+    }
 
+    public void runMigration() {
+        try {
             DbMigration dbMigration = DbMigration.create();
             dbMigration.setPlatform(Platform.POSTGRES);
             dbMigration.generateMigration();
@@ -35,15 +44,12 @@ public enum DataBaseFactory {
             migrationConfig.setDbUrl(ConfigManager.INSTANCE.getDbConfig().getString("url"));
             migrationConfig.setDbUsername(ConfigManager.INSTANCE.getDbConfig().getString("username"));
             migrationConfig.setDbPassword(ConfigManager.INSTANCE.getDbConfig().getString("password"));
-            migrationConfig.setDbSchema("public");
+            migrationConfig.setDbSchema(ConfigManager.INSTANCE.getDbConfig().getString("schema"));
 
             MigrationRunner migrationRunner = new MigrationRunner(migrationConfig);
             migrationRunner.run();
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("DB Error:: " + e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

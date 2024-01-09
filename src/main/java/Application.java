@@ -1,20 +1,11 @@
-import io.ebean.DB;
-import io.ebean.Database;
-import io.ebean.Finder;
-import io.ebean.annotation.Platform;
-import io.ebean.config.DatabaseConfig;
-import io.ebean.datasource.DataSourceConfig;
-import io.ebean.dbmigration.DbMigration;
-import io.ebean.migration.MigrationConfig;
-import io.ebean.migration.MigrationRunner;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 
 
 import ttmm.database.DataBaseFactory;
-import ttmm.database.models.User;
 import ttmm.utils.ConfigManager;
 
 import java.io.File;
@@ -24,18 +15,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@Slf4j
 public class Application extends AbstractVerticle {
-
 
     public static void main(String[] args) {
         try {
             Vertx vertx = Vertx.vertx();
             vertx.deployVerticle(new Application());
-
-
-
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
+            System.exit(1);
         }
 
     }
@@ -43,14 +32,22 @@ public class Application extends AbstractVerticle {
     @Override
     public void start() throws Exception {
         super.start();
+        initialize();
+
+        //Deploy verticles
+        vertx.deployVerticle(HttpRouter.class.getName());
+    }
+
+    private static void initialize() throws Exception{
         try {
-            JsonObject config = null;
+            JsonObject config;
             try {
                 File file = new File("src/main/resources/config.json");
                 if (file.exists() && !file.isDirectory()) {
                     String json = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
                     config = new JsonObject(json);
                     System.out.println("config: " + config);
+                    ConfigManager.INSTANCE.init(config);
                 } else {
                     throw new Exception("ERR Config file not found");
                 }
@@ -59,17 +56,12 @@ public class Application extends AbstractVerticle {
                 throw new Exception("ERR Config " + e);
             }
 
-            ConfigManager.INSTANCE.init(config);
             DataBaseFactory.INSTANCE.initializeDatabase();
-
-            vertx.deployVerticle(HttpRouter.class.getName());
-
-//            Finder<Long, User> finder = new Finder<>(User.class);
-//            User user = finder.byId(1L);
+            DataBaseFactory.INSTANCE.runMigration();
 
         } catch (Exception e) {
+            log.error(e.getMessage());
             e.printStackTrace();
-            System.out.println("ERR " + e);
             throw new Exception("ERR " + e);
         }
     }

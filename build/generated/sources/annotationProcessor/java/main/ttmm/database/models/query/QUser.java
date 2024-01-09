@@ -5,6 +5,7 @@ import io.ebean.typequery.PLong;
 import io.ebean.typequery.PString;
 import io.ebean.typequery.PTimestamp;
 import ttmm.database.models.User;
+import ttmm.database.models.query.QGroup;
 
 /**
  * Query bean for User.
@@ -29,11 +30,12 @@ public final class QUser extends io.ebean.typequery.TQRootBean<User,QUser> {
   public PTimestamp<QUser> createdAt;
   public PTimestamp<QUser> updatedAt;
   public PBoolean<QUser> deleted;
-  public PString<QUser> first_name;
-  public PString<QUser> last_name;
+  public PString<QUser> firstName;
+  public PString<QUser> lastName;
   public PString<QUser> email;
   public PString<QUser> avatar;
-  public PString<QUser> google_auth_id;
+  public PString<QUser> googleAuthId;
+  public QGroup.Assoc<QUser> groups;
 
 
   /**
@@ -102,11 +104,12 @@ public final class QUser extends io.ebean.typequery.TQRootBean<User,QUser> {
     public static PTimestamp<QUser> createdAt = _alias.createdAt;
     public static PTimestamp<QUser> updatedAt = _alias.updatedAt;
     public static PBoolean<QUser> deleted = _alias.deleted;
-    public static PString<QUser> first_name = _alias.first_name;
-    public static PString<QUser> last_name = _alias.last_name;
+    public static PString<QUser> firstName = _alias.firstName;
+    public static PString<QUser> lastName = _alias.lastName;
     public static PString<QUser> email = _alias.email;
     public static PString<QUser> avatar = _alias.avatar;
-    public static PString<QUser> google_auth_id = _alias.google_auth_id;
+    public static PString<QUser> googleAuthId = _alias.googleAuthId;
+    public static QGroup.Assoc<QUser> groups = _alias.groups;
   }
 
   /**  Association query bean */
@@ -117,11 +120,12 @@ public final class QUser extends io.ebean.typequery.TQRootBean<User,QUser> {
     public PTimestamp<R> createdAt;
     public PTimestamp<R> updatedAt;
     public PBoolean<R> deleted;
-    public PString<R> first_name;
-    public PString<R> last_name;
+    public PString<R> firstName;
+    public PString<R> lastName;
     public PString<R> email;
     public PString<R> avatar;
-    public PString<R> google_auth_id;
+    public PString<R> googleAuthId;
+    public QGroup.Assoc<R> groups;
 
     public Assoc(String name, R root) {
       super(name, root);
