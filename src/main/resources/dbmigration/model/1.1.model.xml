@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="&quot;user&quot;" pkName="pk_user">
+            <column name="id" type="bigint" primaryKey="true"/>
+            <column name="first_name" type="varchar"/>
+            <column name="last_name" type="varchar"/>
+            <column name="email" type="varchar" unique="uq_user_email"/>
+            <column name="avatar" type="varchar"/>
+            <column name="google_auth_id" type="varchar"/>
+            <column name="created_at" type="timestamp" notnull="true"/>
+            <column name="updated_at" type="timestamp" notnull="true"/>
+            <column name="deleted" type="boolean" defaultValue="false" notnull="true"/>
+            <uniqueConstraint name="uq_user_email" columnNames="email" oneToOne="false" nullableColumns="email"/>
+        </createTable>
+        <alterForeignKey name="fk_user_group_user" columnNames="DROP FOREIGN KEY" indexName="ix_user_group_user" tableName="user_group"/>
+        <alterForeignKey name="fk_user_group_user" columnNames="user_id" refColumnNames="id" refTableName="&quot;user&quot;" indexName="ix_user_group_user" tableName="user_group"/>
+    </changeSet>
+    <changeSet type="pendingDrops">
+        <dropTable name="user" sequenceCol="id"/>
+    </changeSet>
+</migration>

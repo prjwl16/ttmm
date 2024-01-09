@@ -32,20 +32,17 @@ public enum AuthRouter implements SubRouterProtocol {
         OAuth2Auth authProvider = GoogleAuth.create(vertx, clientId, clientSecret);
         OAuth2AuthHandler authHandler = OAuth2AuthHandler.create(vertx, authProvider, redirectUri).withScopes(List.of("email", "profile"));
         authHandler.setupCallback(router.get("/callback"));
-        try {
 
-            router.route("/login").handler(authHandler).failureHandler(ctx -> {
-                System.out.println("err: " + ctx.failure());
-                ctx.response().end("error");
-            });
+        router.route("/login").handler(authHandler).failureHandler(ctx -> {
+            System.out.println("err: " + ctx.failure());
+            ctx.response().end("error");
+        });
 
-            router.get("/google/callback").handler(ctx -> {
+        router.get("/google/callback").handler(ctx -> {
                 try {
                     String code = ctx.request().getParam("code");
-
                     authProvider.authenticate(new JsonObject().put("code", code).put("redirectUri", redirectUri)).onSuccess(user -> {
                         Call<com.google.gson.JsonObject> call  = Google.INSTANCE.getBase().getUserInfo("Bearer " + user.principal().getString("access_token"));
-
                         com.google.gson.JsonObject userInfo = null;
                         try {
                             userInfo = call.execute().body();
@@ -86,14 +83,8 @@ public enum AuthRouter implements SubRouterProtocol {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-
             });
 
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("err here: " + e);
-        }
         return router;
     }
 }

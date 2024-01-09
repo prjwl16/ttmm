@@ -14,7 +14,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "group")
+@Table(name = "\"group\"")
 public class Group extends BaseModel {
     private String name;
     private String description;

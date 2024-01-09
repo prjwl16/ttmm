@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
+@Table(name = "\"user\"")
 public class User extends BaseModel {
     @Column(name = "first_name")
     private String firstName;
