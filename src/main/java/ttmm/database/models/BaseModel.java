@@ -21,7 +21,6 @@ public abstract class BaseModel extends Model {
 
     @Id
     @NotNull
-    @Column(length = 40)
     private Long id;
 
     @WhenCreated

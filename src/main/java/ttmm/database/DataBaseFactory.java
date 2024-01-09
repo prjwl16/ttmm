@@ -1,15 +1,16 @@
 package ttmm.database;
 
-import io.ebean.Database;
 import io.ebean.DatabaseFactory;
-import io.ebean.Finder;
+import io.ebean.annotation.Platform;
 import io.ebean.config.DatabaseConfig;
 import io.ebean.datasource.DataSourceConfig;
+import io.ebean.dbmigration.DbMigration;
+import io.ebean.migration.MigrationConfig;
+import io.ebean.migration.MigrationRunner;
 import io.vertx.core.json.JsonObject;
-import ttmm.database.models.User;
 import ttmm.utils.ConfigManager;
 
-public enum DB {
+public enum DataBaseFactory {
 
     INSTANCE;
 
@@ -23,8 +24,23 @@ public enum DB {
             DatabaseConfig databaseConfig = new DatabaseConfig();
             databaseConfig.setDataSourceConfig(dataSourceConfig).setName("dev");
             databaseConfig.setDefaultServer(true);
-
             DatabaseFactory.create(databaseConfig);
+
+
+            DbMigration dbMigration = DbMigration.create();
+            dbMigration.setPlatform(Platform.POSTGRES);
+            dbMigration.generateMigration();
+
+            MigrationConfig migrationConfig = new MigrationConfig();
+            migrationConfig.setDbUrl(ConfigManager.INSTANCE.getDbConfig().getString("url"));
+            migrationConfig.setDbUsername(ConfigManager.INSTANCE.getDbConfig().getString("username"));
+            migrationConfig.setDbPassword(ConfigManager.INSTANCE.getDbConfig().getString("password"));
+            migrationConfig.setDbSchema("public");
+
+            MigrationRunner migrationRunner = new MigrationRunner(migrationConfig);
+            migrationRunner.run();
+
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("DB Error:: " + e);

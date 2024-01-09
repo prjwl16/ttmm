@@ -1,13 +1,19 @@
+import io.ebean.DB;
+import io.ebean.Database;
 import io.ebean.Finder;
 import io.ebean.annotation.Platform;
+import io.ebean.config.DatabaseConfig;
 import io.ebean.datasource.DataSourceConfig;
+import io.ebean.dbmigration.DbMigration;
+import io.ebean.migration.MigrationConfig;
+import io.ebean.migration.MigrationRunner;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import org.apache.commons.io.FileUtils;
 
 
-import ttmm.database.DB;
+import ttmm.database.DataBaseFactory;
 import ttmm.database.models.User;
 import ttmm.utils.ConfigManager;
 
@@ -25,6 +31,9 @@ public class Application extends AbstractVerticle {
         try {
             Vertx vertx = Vertx.vertx();
             vertx.deployVerticle(new Application());
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,7 +60,8 @@ public class Application extends AbstractVerticle {
             }
 
             ConfigManager.INSTANCE.init(config);
-            DB.INSTANCE.initializeDatabase();
+            DataBaseFactory.INSTANCE.initializeDatabase();
+
             vertx.deployVerticle(HttpRouter.class.getName());
 
 //            Finder<Long, User> finder = new Finder<>(User.class);

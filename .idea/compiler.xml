@@ -10,6 +10,6 @@
         <module name="ttmm.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="20" />
   </component>
 </project>

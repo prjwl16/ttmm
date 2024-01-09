@@ -43,6 +43,11 @@ dependencies {
     implementation("io.ebean:ebean-core:13.25.2")
     implementation("io.ebean:ebean-datasource:8.11")
     implementation("io.ebean:ebean-platform-postgres:13.25.2")
+    implementation( 'io.ebean:ebean-ddl-generator:13.25.2')
+    implementation 'io.ebean:ebean-querybean:12.13.6'
+    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+    implementation 'javax.xml.bind:jaxb-api:2.3.3'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.3'
 }
 
 mainClassName = 'Application'
