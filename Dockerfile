@@ -15,4 +15,4 @@ WORKDIR /app
 RUN ls -lah
 
 ARG DOCKER_ENV
-CMD ["java", "-Xmx5g", "-Xms500m", "-jar", "server.jar", "run", "Application"]
+CMD ["java", "-Xmx5g", "-Xms500m", "-jar", "server.jar", "run", "Application", "-conf", "main/config.json"]
