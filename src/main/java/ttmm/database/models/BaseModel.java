@@ -32,7 +32,7 @@ public abstract class BaseModel extends Model {
     private Timestamp updatedAt;
 
     @SoftDelete
-    private boolean deleted;
+    private boolean isDeleted = false;
 
 
 }

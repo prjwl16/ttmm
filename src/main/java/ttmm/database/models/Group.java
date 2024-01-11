@@ -1,6 +1,7 @@
 package ttmm.database.models;
 
 
+import io.ebean.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,12 +15,13 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "\"group\"")
+@Table(name = "groups")
 public class Group extends BaseModel {
     private String name;
     private String description;
     private String avatar;
 
-    @ManyToMany(mappedBy = "groups")
-    private List<User> users;
+    @OneToMany(mappedBy = "group")
+    @JsonIgnore
+    private List<UserGroup> userGroups;
 }

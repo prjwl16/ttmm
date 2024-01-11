@@ -33,8 +33,6 @@ public class Application extends AbstractVerticle {
     public void start() throws Exception {
         super.start();
         initialize();
-
-        //Deploy verticles
         vertx.deployVerticle(HttpRouter.class.getName());
     }
 
@@ -42,7 +40,7 @@ public class Application extends AbstractVerticle {
         try {
             JsonObject config;
             try {
-                File file = new File("src/main/resources/config.json");
+                File file = new File("src/main/resources/local.config.json");
                 if (file.exists() && !file.isDirectory()) {
                     String json = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
                     config = new JsonObject(json);
