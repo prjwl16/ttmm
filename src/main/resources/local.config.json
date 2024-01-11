@@ -1,10 +1,10 @@
 {
     "database": {
-        "host": "localhost",
-        "username": "prajwal.more",
-        "password": "",
-        "database": "ttmm",
-        "url": "jdbc:postgresql://localhost:5432/ttmm",
+        "host": "34.93.134.213",
+        "username": "prjwl",
+        "password": "U[M`EvozL`5$;Cc$",
+        "database": "dev",
+        "url": "jdbc:postgresql://34.93.134.213:5432/dev",
         "schema": "public"
     },
 

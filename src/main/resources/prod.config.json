@@ -4,7 +4,7 @@
         "username": "prjwl",
         "password": "prjwl",
         "database": "ttmm_stage",
-        "url": "jdbc:postgresql://34.93.134.213:5432/ttmm_stage",
+        "url": "jdbc:postgresql://localhost:5432/ttmm_stage",
         "schema": "public"
     },
 

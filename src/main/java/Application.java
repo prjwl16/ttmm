@@ -40,21 +40,21 @@ public class Application extends AbstractVerticle {
         try {
             String jsonString = "{\n" +
                 "    \"database\": {\n" +
-                "        \"host\": \"localhost\",\n" +
+                "        \"host\": \"34.93.134.213\",\n" +
                 "        \"username\": \"prjwl\",\n" +
-                "        \"password\": \"prjwl\",\n" +
-                "        \"database\": \"ttmm_stage\",\n" +
-                "        \"url\": \"jdbc:postgresql://localhost:5432/ttmm_stage\",\n" +
+                "        \"password\": \"U[M`EvozL`5$;Cc$\",\n" +
+                "        \"database\": \"dev\",\n" +
+                "        \"url\": \"jdbc:postgresql://34.93.134.213:5432/dev\",\n" +
                 "        \"schema\": \"public\"\n" +
                 "    },\n" +
-                "\n" +
+                "    \n" +
                 "    \"gauth\": {\n" +
                 "        \"client_id\": \"778139559269-vaumek9o9uba10ng6hklimbmmrmh9gg2.apps.googleusercontent.com\",\n" +
                 "        \"client_secret\": \"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\",\n" +
-                "        \"redirect_uri\": \"http://localhost:8080/oauth/google/callback\"\n" +
+                "        \"redirect_uri\": \"http://onthecloud.live/oauth/google/callback\"\n" +
                 "    },\n" +
                 "    \"port\": 8080\n" +
-                "}";
+                "}\n";
 
             JsonObject config = new JsonObject(jsonString);
 
