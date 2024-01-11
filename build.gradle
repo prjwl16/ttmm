@@ -39,7 +39,6 @@ dependencies {
     implementation 'commons-io:commons-io:2.15.1'
 
     compileOnly("io.ebean:ebean:13.25.2")
-    annotationProcessor("io.ebean:querybean-generator:13.25.2")
 
     implementation("io.ebean:ebean-querybean:13.25.2")
     implementation("io.ebean:ebean-core:13.25.2")
