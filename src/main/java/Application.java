@@ -38,21 +38,40 @@ public class Application extends AbstractVerticle {
 
     private static void initialize() throws Exception{
         try {
-            JsonObject config;
-            try {
-                File file = new File(Application.class.getClassLoader().getResource("config.json").getFile());
-                if (file.exists() && !file.isDirectory()) {
-                    String json = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
-                    config = new JsonObject(json);
-                    System.out.println("config: " + config);
+            String jsonString = "{\n" +
+                "    \"database\": {\n" +
+                "        \"host\": \"localhost\",\n" +
+                "        \"username\": \"prjwl\",\n" +
+                "        \"password\": \"prjwl\",\n" +
+                "        \"database\": \"ttmm_stage\",\n" +
+                "        \"url\": \"jdbc:postgresql://34.93.134.213:5432/ttmm_stage\",\n" +
+                "        \"schema\": \"public\"\n" +
+                "    },\n" +
+                "\n" +
+                "    \"gauth\": {\n" +
+                "        \"client_id\": \"778139559269-vaumek9o9uba10ng6hklimbmmrmh9gg2.apps.googleusercontent.com\",\n" +
+                "        \"client_secret\": \"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\",\n" +
+                "        \"redirect_uri\": \"http://localhost:8080/oauth/google/callback\"\n" +
+                "    },\n" +
+                "    \"port\": 8080\n" +
+                "}";
+
+            JsonObject config = new JsonObject(jsonString);
+
+//            try {
+//                File file = new File(Application.class.getClassLoader().getResource("config.json").getFile());
+//                if (file.exists() && !file.isDirectory()) {
+//                    String json = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+//                    config = new JsonObject(json);
+//                    System.out.println("config: " + config);
                     ConfigManager.INSTANCE.init(config);
-                } else {
-                    throw new Exception("ERR Config file not found");
-                }
-            } catch (IOException e) {
-                System.out.println("ERR Config " + e);
-                throw new Exception("ERR Config " + e);
-            }
+//                } else {
+//                    throw new Exception("ERR Config file not found");
+//                }
+//            } catch (IOException e) {
+//                System.out.println("ERR Config " + e);
+//                throw new Exception("ERR Config " + e);
+//            }
 
             DataBaseFactory.INSTANCE.initializeDatabase();
             DataBaseFactory.INSTANCE.runMigration();
