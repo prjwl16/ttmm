@@ -24,7 +24,7 @@ public enum DataBaseFactory {
             dataSourceConfig.setPassword(config.getString("password"));
             dataSourceConfig.setUrl(config.getString("url"));
             DatabaseConfig databaseConfig = new DatabaseConfig();
-            databaseConfig.setDataSourceConfig(dataSourceConfig).setName("dev");
+            databaseConfig.setDataSourceConfig(dataSourceConfig).setName("ttmm");
             databaseConfig.setDefaultServer(true);
             DatabaseFactory.create(databaseConfig);
 

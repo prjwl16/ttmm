@@ -9,7 +9,6 @@ import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import lombok.extern.slf4j.Slf4j;
 import retrofit2.Call;
 import ttmm.database.models.User;
-import ttmm.database.models.query.QUser;
 import ttmm.network.Google;
 import ttmm.utils.ConfigManager;
 import ttmm.utils.SubRouterProtocol;
@@ -52,25 +51,6 @@ public enum AuthRouter implements SubRouterProtocol {
                         }
 
                         //Create user if not exists
-                        try{
-                            QUser finder = new QUser().email.eq(userInfo.get("email").getAsString());
-                            User user1 = finder.findOne();
-                            if(user1 == null){
-                                user1 = new User();
-                                String email = userInfo.get("email").getAsString();
-                                String name = userInfo.get("name").getAsString();
-                                String picture = userInfo.get("picture").getAsString();
-                                user1.setEmail(email);
-                                user1.setFirstName(name);
-                                user1.setLastName(name);
-                                user1.setAvatar(picture);
-                                user1.save();
-                            }else {
-                                throw new Exception("User already exists");
-                            }
-                        }catch (Exception e) {
-                            e.printStackTrace();
-                        }
 
                         ctx.response().end("ok");
                     }).onFailure(err -> {

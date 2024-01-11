@@ -1,10 +1,12 @@
 package ttmm.database.models;
 
 import io.ebean.annotation.Index;
+import io.ebean.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import ttmm.database.enums.Role;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "\"user\"")
+@Table(name = "users")
 public class User extends BaseModel {
     @Column(name = "first_name")
     private String firstName;
@@ -28,11 +30,19 @@ public class User extends BaseModel {
     @Column(name = "google_auth_id")
     private String googleAuthId;
 
-    //Many to Many
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_group",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
-    private List<Group> groups;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<UserTransaction> userTransactions;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Category> categories;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<UserGroup> userGroups;
 
 }
