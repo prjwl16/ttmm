@@ -47,7 +47,8 @@ public class Application extends AbstractVerticle {
                     System.out.println("config: " + config);
                     ConfigManager.INSTANCE.init(config);
                 } else {
-                    throw new Exception("ERR Config file not found");
+//                    throw new Exception("ERR Config file not found");
+                    System.out.println("ERR Config file not found");
                 }
             } catch (IOException e) {
                 System.out.println("ERR Config " + e);
