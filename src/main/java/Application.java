@@ -44,7 +44,7 @@ public class Application extends AbstractVerticle {
                 "        \"username\": \"prjwl\",\n" +
                 "        \"password\": \"prjwl\",\n" +
                 "        \"database\": \"ttmm_stage\",\n" +
-                "        \"url\": \"jdbc:postgresql://34.93.134.213:5432/ttmm_stage\",\n" +
+                "        \"url\": \"jdbc:postgresql://localhost:5432/ttmm_stage\",\n" +
                 "        \"schema\": \"public\"\n" +
                 "    },\n" +
                 "\n" +

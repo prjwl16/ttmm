@@ -29,7 +29,7 @@ public enum DataBaseFactory {
             dataSourceConfig.setPassword(config.getString("password"));
             dataSourceConfig.setUrl(config.getString("url"));
             DatabaseConfig databaseConfig = new DatabaseConfig();
-            databaseConfig.setDataSourceConfig(dataSourceConfig).setName("ttmm");
+            databaseConfig.setDataSourceConfig(dataSourceConfig).setName("ttmm_stage");
             databaseConfig.setDefaultServer(true);
             db = DatabaseFactory.create(databaseConfig);
 
@@ -52,7 +52,7 @@ public enum DataBaseFactory {
             migrationConfig.setDbSchema(ConfigManager.INSTANCE.getDbConfig().getString("schema"));
 
             MigrationRunner migrationRunner = new MigrationRunner(migrationConfig);
-            dbMigration.setPathToResources("/app/src/main/resources/dbmigration");
+            dbMigration.setPathToResources("/app/src/main/resources");
             migrationRunner.run();
         } catch (IOException e) {
             throw new RuntimeException(e);
