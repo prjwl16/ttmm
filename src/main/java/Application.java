@@ -40,15 +40,14 @@ public class Application extends AbstractVerticle {
         try {
             JsonObject config;
             try {
-                File file = new File("/config.json");
+                File file = new File("app/src/main/resources/config.json");
                 if (file.exists() && !file.isDirectory()) {
                     String json = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
                     config = new JsonObject(json);
                     System.out.println("config: " + config);
                     ConfigManager.INSTANCE.init(config);
                 } else {
-//                    throw new Exception("ERR Config file not found");
-                    System.out.println("ERR Config file not found");
+                    throw new Exception("ERR Config file not found");
                 }
             } catch (IOException e) {
                 System.out.println("ERR Config " + e);
