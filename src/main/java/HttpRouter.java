@@ -2,6 +2,7 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.ext.web.Router;
 import io.vertx.pgclient.PgConnectOptions;
+import ttmm.Playground;
 import ttmm.database.models.User;
 import ttmm.routes.AuthRouter;
 import ttmm.routes.UserRouter;
@@ -45,6 +46,8 @@ public class HttpRouter extends AbstractVerticle {
         router.route("/user/*").subRouter(UserRouter.INSTANCE.router(vertx));
 
         router.route("/oauth/*").subRouter(AuthRouter.INSTANCE.router(vertx));
+
+        router.route("/play/*").subRouter(Playground.INSTANCE.router(vertx));
 
         vertx.createHttpServer().requestHandler(router).listen(ConfigManager.INSTANCE.getPort());
 

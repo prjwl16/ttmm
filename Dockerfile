@@ -5,7 +5,7 @@ WORKDIR /home/gradle/src
 RUN ./gradlew clean shadowJar
 
 FROM adoptopenjdk/openjdk8:alpine-jre
-EXPOSE 8080
+EXPOSE 3000
 COPY --from=builder /home/gradle/src/build/libs/server.jar /app/
 COPY --from=builder /home/gradle/src/src/main/resources/  /app/
 WORKDIR /app

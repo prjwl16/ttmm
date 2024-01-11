@@ -1,7 +1,10 @@
 package ttmm.database;
 
+import io.ebean.Database;
+import io.ebean.DatabaseBuilder;
 import io.ebean.DatabaseFactory;
 import io.ebean.annotation.Platform;
+import io.ebean.config.ContainerConfig;
 import io.ebean.config.DatabaseConfig;
 import io.ebean.datasource.DataSourceConfig;
 import io.ebean.dbmigration.DbMigration;
@@ -16,6 +19,8 @@ public enum DataBaseFactory {
 
     INSTANCE;
 
+    public Database db;
+
     public void initializeDatabase() {
         try {
             JsonObject config = ConfigManager.INSTANCE.getDbConfig();
@@ -26,7 +31,7 @@ public enum DataBaseFactory {
             DatabaseConfig databaseConfig = new DatabaseConfig();
             databaseConfig.setDataSourceConfig(dataSourceConfig).setName("ttmm");
             databaseConfig.setDefaultServer(true);
-            DatabaseFactory.create(databaseConfig);
+            db = DatabaseFactory.create(databaseConfig);
 
         } catch (Exception e) {
             e.printStackTrace();
