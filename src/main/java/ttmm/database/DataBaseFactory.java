@@ -52,6 +52,7 @@ public enum DataBaseFactory {
             migrationConfig.setDbSchema(ConfigManager.INSTANCE.getDbConfig().getString("schema"));
 
             MigrationRunner migrationRunner = new MigrationRunner(migrationConfig);
+            dbMigration.setPathToResources("/app/src/main/resources/dbmigration");
             migrationRunner.run();
         } catch (IOException e) {
             throw new RuntimeException(e);
