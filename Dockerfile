@@ -7,8 +7,8 @@ RUN ./gradlew clean shadowJar
 FROM adoptopenjdk/openjdk16:alpine-jre
 EXPOSE 8080
 
-COPY --from=builder /home/gradle/src/build/libs/server.jar /app/
-COPY --from=builder /home/gradle/src/build/resources/ /app/
+COPY --from=builder /home/gradle/src/build/libs/server.jar  /app/
+COPY --from=builder /home/gradle/src/build/resources/  /app/
 WORKDIR /app
 RUN ls -lah
 
