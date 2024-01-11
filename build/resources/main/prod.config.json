@@ -1,17 +1,17 @@
 {
     "database": {
-        "host": "34.93.134.213",
+        "host": "localhost",
         "username": "prjwl",
-        "password": "U[M`EvozL`5$;Cc$",
-        "database": "dev",
-        "url": "jdbc:postgresql://34.93.134.213:5432/dev",
+        "password": "prjwl",
+        "database": "ttmm_stage",
+        "url": "jdbc:postgresql://34.93.134.213:5432/ttmm_stage",
         "schema": "public"
     },
 
     "gauth": {
         "client_id": "778139559269-vaumek9o9uba10ng6hklimbmmrmh9gg2.apps.googleusercontent.com",
         "client_secret": "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",
-        "redirect_uri": "http://localhost:3000/oauth/google/callback"
+        "redirect_uri": "http://localhost:8080/oauth/google/callback"
     },
     "port": 8080
 }

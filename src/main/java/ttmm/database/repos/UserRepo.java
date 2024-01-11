@@ -6,7 +6,7 @@ import ttmm.database.models.User;
 public enum UserRepo {
     INSTANCE;
 
-    public SqlFinder<Long, User> userFinder = new SqlFinder<>(User.class);
+    public final SqlFinder<Long, User> userFinder = new SqlFinder<>(User.class);
 
     public User getUserById(Long id) {
         return userFinder.query().where().eq("id", id).findOne();
