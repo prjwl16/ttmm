@@ -49,8 +49,8 @@ public class Application extends AbstractVerticle {
                 "    },\n" +
                 "    \n" +
                 "    \"gauth\": {\n" +
-                "        \"client_id\": \"778139559269-vaumek9o9uba10ng6hklimbmmrmh9gg2.apps.googleusercontent.com\",\n" +
-                "        \"client_secret\": \"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\",\n" +
+                "        \"client_id\": \"778139559269-jenpkci84rcj8s46e0mhncojfrfibgrv.apps.googleusercontent.com\",\n" +
+                "        \"client_secret\": \"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\",\n" +
                 "        \"redirect_uri\": \"http://onthecloud.live/oauth/google/callback\"\n" +
                 "    },\n" +
                 "    \"port\": 8080\n" +
