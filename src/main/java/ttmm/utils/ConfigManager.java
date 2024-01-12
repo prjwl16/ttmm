@@ -28,5 +28,13 @@ public enum ConfigManager {
         return config.getInteger("port");
     }
 
+    public String getFrontEndUri() {
+        return config.getString("front_end_uri");
+    }
+
+    public String getEnv() {
+        return config.getString("ENV");
+    }
+
 
 }

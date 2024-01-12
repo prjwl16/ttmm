@@ -23,44 +23,50 @@ ext {
 }
 
 dependencies {
+
+    //vertx
     implementation "io.vertx:vertx-web-client:$vertxVersion"
     implementation "io.vertx:vertx-web:$vertxVersion"
-    implementation "io.vertx:vertx-junit5:$vertxVersion"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
-    implementation "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
-    implementation "org.projectlombok:lombok:$lombokVersion"
-    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
-    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation 'io.vertx:vertx-auth-oauth2:4.5.1'
     implementation "io.vertx:vertx-pg-client:4.5.1"
     implementation 'org.postgresql:postgresql:42.7.1'
-    compileOnly 'io.vertx:vertx-mysql-postgresql-client:3.9.16'
-    implementation "io.netty:netty-all:4.1.73.Final"
-    implementation 'commons-io:commons-io:2.15.1'
 
-    compileOnly("io.ebean:ebean:13.25.2")
+    //Ebean
+    implementation "io.ebean:ebean-core:13.25.2"
+    implementation "io.ebean:ebean-datasource:8.11"
+    implementation "io.ebean:ebean-platform-postgres:13.25.2"
+    implementation 'io.ebean:ebean-ddl-generator:13.25.2'
 
-    implementation("io.ebean:ebean-querybean:13.25.2")
-    implementation("io.ebean:ebean-core:13.25.2")
-    implementation("io.ebean:ebean-datasource:8.11")
-    implementation("io.ebean:ebean-platform-postgres:13.25.2")
-    implementation( 'io.ebean:ebean-ddl-generator:13.25.2')
-    implementation 'io.ebean:ebean-querybean:12.13.6'
+    //JAXB -- needed for data model migration
     implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
     implementation 'javax.xml.bind:jaxb-api:2.3.3'
     implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.3'
-    implementation 'org.slf4j:slf4j-api:2.0.9'
-    implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
 
-    implementation('io.vertx:vertx-auth-oauth2:4.5.1')
+    //Network
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
+    //reactive
+    implementation "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
 
-
+    //Utils
+    implementation "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation "io.netty:netty-all:4.1.73.Final"
+    implementation 'commons-io:commons-io:2.15.1'
+    implementation 'io.vertx:vertx-auth-jwt:4.5.1'
+    implementation 'org.slf4j:slf4j-api:2.0.11'
+    implementation 'org.slf4j:slf4j-simple:2.0.11'
 }
 
 mainClassName = 'Application'
+
+sourceSets {
+    main {
+        resources.srcDirs = ['src/main/resources'] as Iterable<?>
+    }
+}
 
 jar {
     manifest {
