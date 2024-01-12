@@ -40,7 +40,7 @@ public class Application extends AbstractVerticle {
             log.info("Initializing config...");
             JsonObject config;
             try {
-                File file = new File("/app/main/.config.json");
+                File file = new File("/app/main/config.json");
                 if (file.exists() && !file.isDirectory()) {
                     String json = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
                     config = new JsonObject(json);
