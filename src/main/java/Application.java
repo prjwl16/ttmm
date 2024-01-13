@@ -21,7 +21,6 @@ public class Application extends AbstractVerticle {
         } catch (Exception e) {
             System.exit(1);
         }
-
     }
 
     @Override
@@ -40,7 +39,16 @@ public class Application extends AbstractVerticle {
             log.info("Initializing config...");
             JsonObject config;
             try {
-                File file = new File("/app/main/config.json");
+                File location = new File(".");
+                String configPath;
+                if(location.getPath().equals("/app")){
+                    log.info("Running in docker");
+                    configPath = "/app/main/config.json";
+                }else{
+                    log.info("Running in local");
+                    configPath = "src/main/resources/config.json";
+                }
+                File file = new File(configPath);
                 if (file.exists() && !file.isDirectory()) {
                     String json = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
                     config = new JsonObject(json);

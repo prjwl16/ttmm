@@ -10,6 +10,7 @@ import io.vertx.ext.auth.jwt.JWTAuthOptions;
 import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
 import ttmm.database.repos.UserRepo;
+import ttmm.utils.ConfigManager;
 
 @Slf4j
 public enum Jwt {
@@ -19,15 +20,11 @@ public enum Jwt {
 
     public void inti(Vertx vertx) {
 
-        if (provider != null) {
+        if (provider != null) return;
 
-            return;
-        }
-
-        provider = JWTAuth.create(vertx, new JWTAuthOptions()
-            .addPubSecKey(new PubSecKeyOptions()
-                .setAlgorithm("HS256")
-                .setBuffer("keyboard cat")));
+        provider = JWTAuth.create(vertx, new JWTAuthOptions().addPubSecKey(new PubSecKeyOptions()
+            .setAlgorithm("HS256")
+            .setBuffer(ConfigManager.INSTANCE.getJwtSecret())));
 
     }
 
@@ -35,7 +32,7 @@ public enum Jwt {
         try {
             return provider.generateToken(new JsonObject().put("email", email));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return null;
         }
     }

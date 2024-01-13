@@ -16,5 +16,6 @@
         "error_redirect": "/login?error=google"
     },
     "front_end_uri": "https://frontend-money-manager.vercel.app/login",
-    "port": 8080
+    "port": 8080,
+    "jwt_secret": "cjndfbvhud"
 }
