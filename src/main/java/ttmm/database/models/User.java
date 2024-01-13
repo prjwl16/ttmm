@@ -1,5 +1,6 @@
 package ttmm.database.models;
 
+import io.ebean.annotation.DbDefault;
 import io.ebean.annotation.Index;
 import io.ebean.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,7 @@ public class User extends BaseModel {
     private String googleAuthId;
 
     @Enumerated(EnumType.STRING)
+    @DbDefault("USER")
     private Role role;
 
     @OneToMany(mappedBy = "user")

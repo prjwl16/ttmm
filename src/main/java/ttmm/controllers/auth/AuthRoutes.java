@@ -2,19 +2,22 @@ package ttmm.controllers.auth;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.auth.authentication.Credentials;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
+import io.vertx.ext.auth.oauth2.Oauth2Credentials;
 import io.vertx.ext.auth.oauth2.providers.GoogleAuth;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import lombok.extern.slf4j.Slf4j;
 import ttmm.controllers.CommonController;
-import ttmm.database.models.User;
+import ttmm.database.repos.UserRepo;
 import ttmm.middlewares.Jwt;
 import ttmm.utils.ConfigManager;
 import ttmm.utils.SubRouterProtocol;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 
 /*
@@ -53,31 +56,43 @@ public enum AuthRoutes implements SubRouterProtocol, CommonController {
             String frontEndUriTokenRedirect = ConfigManager.INSTANCE.getFrontEndUri() + ConfigManager.INSTANCE.getAuthConfig().getString("token_redirect");
             String frontEndUriErrorRedirect = ConfigManager.INSTANCE.getFrontEndUri() + ConfigManager.INSTANCE.getAuthConfig().getString("error_redirect");
 
-            log.info(frontEndUriErrorRedirect);
-            log.info(frontEndUriTokenRedirect);
+            JsonObject put = new JsonObject().put("code", code).put("redirectUri", redirectUri);
 
-            authProvider.authenticate(new JsonObject().put("code", code).put("redirectUri", redirectUri))
+            Credentials credentials = new Oauth2Credentials(put);
+
+            System.out.println(put.encodePrettily());
+
+            //Authenticate user with google
+            // 1) If user exists in DB then create a token with email and id and then redirect to front end with token
+            // 2) If user does not exist in DB then create a new user and then create a token with email and id and then redirect to front end with token
+
+            // TODO: Come back and learn how it actually works
+            authProvider.authenticate(credentials)
                 .onSuccess(user -> {
-                    authProvider.userInfo(user).onSuccess(userInfo -> {
-                        log.info("User info: {}", userInfo);
-                        //TODO: Create User if not exists
-                        if(userInfo != null){
-                            User newUser = new User();
-                            newUser.setEmail(userInfo.getString("email"));
-                            newUser.setFirstName(userInfo.getString("given_name"));
-                            newUser.setLastName(userInfo.getString("family_name"));
-                            newUser.setAvatar(userInfo.getString("picture"));
-                            newUser.save();
-                        }
+                    String email = user.principal().getString("email");
+                    String firstName = user.principal().getString("given_name");
+                    String lastName = user.principal().getString("family_name");
+                    String picture = user.principal().getString("picture");
 
-
-                        String token = Jwt.INSTANCE.generateToken(userInfo.getString("email"));
-                        ctx.response().putHeader("Location", frontEndUriTokenRedirect + token).setStatusCode(302).end();
-                    }).onFailure(err -> {
-                        log.error("Error getting user info", err);
-                        ctx.response().putHeader("Location", frontEndUriErrorRedirect).setStatusCode(302).end();
-                    });
-                }).onFailure(err -> {
+                    UserRepo.INSTANCE.getUserByEmailFuture(email)
+                        .thenComposeAsync(newUser -> {
+                            if (newUser == null) {
+                                return UserRepo.INSTANCE.createUserFuture(email, firstName, lastName, picture);
+                            } else {
+                                return CompletableFuture.completedFuture(newUser);
+                            }
+                        }).thenApplyAsync(userExisted -> {
+                            String token = Jwt.INSTANCE.generateToken(email, userExisted.getId());
+                            ctx.response().putHeader("Location", frontEndUriTokenRedirect + token).setStatusCode(302).end();
+                            return userExisted;
+                        }).exceptionally(throwable -> {
+                            log.error("Error creating user", throwable);
+                            ctx.response().putHeader("Location", frontEndUriErrorRedirect).setStatusCode(302).end();
+                            return null;
+                        });
+                }).onFailure(error -> {
+                    error.printStackTrace();
+                    log.error("Error authenticating user", error);
                     ctx.response().putHeader("Location", frontEndUriErrorRedirect).setStatusCode(302).end();
                 });
         } catch (Exception e) {

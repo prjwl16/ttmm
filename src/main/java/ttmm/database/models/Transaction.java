@@ -1,6 +1,7 @@
 package ttmm.database.models;
 
 
+import io.ebean.annotation.DbDefault;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,9 +24,11 @@ public class Transaction extends BaseModel {
     private String date;
 
     @Enumerated(EnumType.STRING)
+    @DbDefault("EXPENSE")
     private TransactionType type;
 
     @Enumerated(EnumType.STRING)
+    @DbDefault("INR")
     private Currency currency;
 
     @Column(name = "is_shared")

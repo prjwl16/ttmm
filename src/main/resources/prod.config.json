@@ -1,17 +1,21 @@
 {
+    "ENV": "LOCAL",
     "database": {
-        "host": "localhost",
+        "host": "34.93.134.213",
         "username": "prjwl",
-        "password": "prjwl",
-        "database": "ttmm_stage",
-        "url": "jdbc:postgresql://localhost:5432/ttmm_stage",
+        "password": "U[M`EvozL`5$;Cc$",
+        "database": "dev",
+        "url": "jdbc:postgresql://34.93.134.213:5432/dev",
         "schema": "public"
     },
-
     "gauth": {
-        "client_id": "778139559269-jenpkci84rcj8s46e0mhncojfrfibgrv.apps.googleusercontent.com",
-        "client_secret": "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",
-        "redirect_uri": "http://onthecloud.live/oauth/google/callback"
+        "client_id": "778139559269-vaumek9o9uba10ng6hklimbmmrmh9gg2.apps.googleusercontent.com",
+        "client_secret": "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",
+        "redirect_uri": "https://frontend-money-manager.vercel.app/oauth/google/callback",
+        "token_redirect": "/login?token=",
+        "error_redirect": "/login?error=google"
     },
-    "port": 8080
+    "front_end_uri": "https://frontend-money-manager.vercel.app/login",
+    "port": 8080,
+    "jwt_secret": "cjndfbvhud"
 }

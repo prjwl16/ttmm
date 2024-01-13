@@ -1,21 +1,21 @@
 {
     "ENV": "LOCAL",
     "database": {
-        "host": "34.93.134.213",
-        "username": "prjwl",
-        "password": "U[M`EvozL`5$;Cc$",
-        "database": "dev",
-        "url": "jdbc:postgresql://34.93.134.213:5432/dev",
+        "host": "localhost",
+        "username": "prajwal.more",
+        "password": "",
+        "database": "ttmm",
+        "url": "jdbc:postgresql://localhost:5432/ttmm",
         "schema": "public"
     },
     "gauth": {
         "client_id": "778139559269-vaumek9o9uba10ng6hklimbmmrmh9gg2.apps.googleusercontent.com",
         "client_secret": "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",
-        "redirect_uri": "https://frontend-money-manager.vercel.app/oauth/google/callback",
         "token_redirect": "/login?token=",
-        "error_redirect": "/login?error=google"
+        "error_redirect": "/login?error=google",
+        "redirect_uri": "http://localhost:8080/oauth/google/callback"
     },
-    "front_end_uri": "https://frontend-money-manager.vercel.app/login",
+    "front_end_uri": "http://localhost:5173",
     "port": 8080,
     "jwt_secret": "cjndfbvhud"
 }

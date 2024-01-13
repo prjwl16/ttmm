@@ -43,7 +43,7 @@ public class Application extends AbstractVerticle {
                 String configPath;
                 if(location.getPath().equals("/app")){
                     log.info("Running in docker");
-                    configPath = "/app/main/config.json";
+                    configPath = "/app/main/prod.config.json";
                 }else{
                     log.info("Running in local");
                     configPath = "src/main/resources/config.json";

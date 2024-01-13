@@ -1,5 +1,6 @@
 package ttmm.database.models;
 
+import io.ebean.annotation.DbDefault;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,10 +19,12 @@ import javax.persistence.*;
 public class Account extends BaseModel{
     private String name;
     @Enumerated(EnumType.STRING)
+    @DbDefault("INR")
     private Currency currency;
     private String balance;
 
     @Enumerated(EnumType.STRING)
+    @DbDefault("CASH")
     private AccountType type;
 
     @Column(name = "is_default")

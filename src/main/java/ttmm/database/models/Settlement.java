@@ -1,5 +1,6 @@
 package ttmm.database.models;
 
+import io.ebean.annotation.DbDefault;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +21,7 @@ public class Settlement extends BaseModel {
     private double amount;
 
     @Enumerated(EnumType.STRING)
+    @DbDefault("INR")
     private Currency currency;
     private Date date;
 
