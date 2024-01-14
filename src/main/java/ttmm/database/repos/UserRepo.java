@@ -1,6 +1,7 @@
 package ttmm.database.repos;
 
 import ttmm.database.SqlFinder;
+import ttmm.database.enums.Role;
 import ttmm.database.models.User;
 
 import java.util.concurrent.CompletableFuture;
@@ -23,13 +24,14 @@ public enum UserRepo {
         return CompletableFuture.supplyAsync(() -> getUserByEmail(email));
     }
 
-    public CompletionStage<User> createUserFuture(String email, String firstName, String lastName, String avatar) {
+    public CompletionStage<User> createUserFuture(String email, String firstName, String lastName, String avatar, Role role) {
         return CompletableFuture.supplyAsync(() -> {
             User user = new User();
             user.setEmail(email);
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setAvatar(avatar);
+            user.setRole(role);
             user.save();
             return user;
         });

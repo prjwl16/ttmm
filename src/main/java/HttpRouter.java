@@ -2,8 +2,8 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.CorsHandler;
 import lombok.extern.slf4j.Slf4j;
+import ttmm.controllers.apis.Apis;
 import ttmm.controllers.auth.AuthRoutes;
-import ttmm.controllers.user.UserRoutes;
 import ttmm.utils.ConfigManager;
 
 @Slf4j
@@ -42,9 +42,20 @@ public class HttpRouter extends AbstractVerticle {
                     .end("OK??");
             });
 
-            router.route("/api/user/*").subRouter(UserRoutes.INSTANCE.router(vertx));
             router.route("/oauth/*").subRouter(AuthRoutes.INSTANCE.router(vertx));
             router.route("/play/*").subRouter(Playground.INSTANCE.router(vertx));
+
+            //All the APIs will need to be authorized with JWT
+            router.route("/api/*").subRouter(Apis.INSTANCE.router(vertx));
+
+
+            router.errorHandler(500, routingContext -> {
+                routingContext.response().setStatusCode(500).end("Internal Server Error");
+            });
+
+            router.errorHandler(404, routingContext -> {
+                routingContext.response().setStatusCode(404).end("Not Found");
+            });
 
             vertx.createHttpServer().requestHandler(router).listen(ConfigManager.INSTANCE.getPort());
 

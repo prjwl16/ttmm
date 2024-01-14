@@ -3,6 +3,7 @@ package ttmm.database.models;
 import io.ebean.annotation.DbDefault;
 import io.ebean.annotation.Index;
 import io.ebean.annotation.JsonIgnore;
+import io.ebean.annotation.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,6 +27,7 @@ public class User extends BaseModel {
     private String lastName;
     @Column(unique = true)
     @Index(unique = true)
+    @NotNull
     private String email;
     private String avatar;
     @Column(name = "google_auth_id")
@@ -33,6 +35,7 @@ public class User extends BaseModel {
 
     @Enumerated(EnumType.STRING)
     @DbDefault("USER")
+    @NotNull
     private Role role;
 
     @OneToMany(mappedBy = "user")

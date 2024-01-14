@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <alterColumn columnName="name" tableName="accounts" currentType="varchar" notnull="true" currentNotnull="false"/>
+        <alterColumn columnName="name" tableName="categories" currentType="varchar" notnull="true" currentNotnull="false"/>
+        <alterColumn columnName="name" tableName="groups" currentType="varchar" notnull="true" currentNotnull="false"/>
+        <createTable name="recurring_transactions" pkName="pk_recurring_transactions">
+            <column name="id" type="bigint" primaryKey="true"/>
+            <column name="start_date" type="date"/>
+            <column name="end_date" type="date"/>
+            <column name="frequency" type="integer" notnull="true"/>
+            <column name="next_execution_date" type="date"/>
+            <column name="interval" type="varchar"/>
+            <column name="is_active" type="boolean" defaultValue="false" notnull="true"/>
+            <column name="recurring_period" type="varchar"/>
+            <column name="created_at" type="timestamp" notnull="true"/>
+            <column name="updated_at" type="timestamp" notnull="true"/>
+            <column name="is_deleted" type="boolean" defaultValue="false" notnull="true"/>
+        </createTable>
+        <alterColumn columnName="currency" tableName="settlements" currentType="varchar(3)" notnull="true" currentNotnull="false"/>
+        <alterColumn columnName="type" tableName="transactions" currentType="varchar(13)" notnull="true" currentNotnull="false"/>
+        <alterColumn columnName="currency" tableName="transactions" currentType="varchar(3)" notnull="true" currentNotnull="false"/>
+        <addColumn tableName="transactions">
+            <column name="recurring_id" type="bigint" references="recurring_transactions.id" foreignKeyName="fk_transactions_recurring_id" foreignKeyIndex="ix_transactions_recurring_id"/>
+        </addColumn>
+        <alterColumn columnName="email" tableName="users" currentType="varchar" notnull="true" currentNotnull="false"/>
+        <alterColumn columnName="role" tableName="users" currentType="varchar(5)" notnull="true" currentNotnull="false"/>
+        <addUniqueConstraint constraintName="uq_users_email" tableName="users" columnNames="DROP CONSTRAINT" nullableColumns="email"/>
+        <addUniqueConstraint constraintName="uq_users_email" tableName="users" columnNames="email" oneToOne="false" nullableColumns=""/>
+    </changeSet>
+</migration>

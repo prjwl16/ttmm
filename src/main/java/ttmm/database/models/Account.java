@@ -1,6 +1,7 @@
 package ttmm.database.models;
 
 import io.ebean.annotation.DbDefault;
+import io.ebean.annotation.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +18,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "accounts")
 public class Account extends BaseModel{
+
     private String name;
     @Enumerated(EnumType.STRING)
     @DbDefault("INR")

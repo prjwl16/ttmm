@@ -10,13 +10,6 @@ public enum GetUserController implements CommonController {
 
     @Override
     public void handle(RoutingContext event) {
-        Jwt.INSTANCE.validateToken(event).subscribe(
-            response -> {
-                System.out.println(response);
-            },
-            error -> {
-                System.out.println(error);
-            }
-        );
+
     }
 }

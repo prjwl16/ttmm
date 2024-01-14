@@ -13,7 +13,7 @@ public enum Playground implements SubRouterProtocol {
         try {
             Router router = Router.router(vertx);
             router.get().handler(context -> {
-
+                context.response().end("Hello from playground");
             });
             return router;
         }catch (Exception e){

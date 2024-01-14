@@ -2,6 +2,7 @@ package ttmm.database.models;
 
 
 import io.ebean.annotation.DbDefault;
+import io.ebean.annotation.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,10 +26,12 @@ public class Transaction extends BaseModel {
 
     @Enumerated(EnumType.STRING)
     @DbDefault("EXPENSE")
+    @NotNull
     private TransactionType type;
 
     @Enumerated(EnumType.STRING)
     @DbDefault("INR")
+    @NotNull
     private Currency currency;
 
     @Column(name = "is_shared")
@@ -36,6 +39,9 @@ public class Transaction extends BaseModel {
 
     @Column(name = "is_recurring")
     private boolean isRecurring;
+
+    @Column(name = "recurring_id")
+    private Long recurringId;
 
     //Relationships
     @ManyToOne
@@ -49,5 +55,9 @@ public class Transaction extends BaseModel {
     @ManyToOne
     @Column(name = "group_id")
     private Group group;
+
+    @ManyToOne
+    @JoinColumn(name = "recurring_id")
+    private RecurringTransaction recurringTransaction;
 
 }

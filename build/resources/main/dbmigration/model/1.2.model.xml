@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="friendships" pkName="pk_friendships">
+            <column name="id" type="bigint" primaryKey="true"/>
+            <column name="friendship_id" type="varchar"/>
+            <column name="user_id" type="bigint"/>
+            <column name="friend_id" type="bigint"/>
+            <column name="status" type="varchar(8)" defaultValue="'PENDING'" checkConstraint="check ( status in ('PENDING','ACCEPTED','REJECTED','BLOCKED'))" checkConstraintName="ck_friendships_status"/>
+            <column name="created_at" type="timestamp" notnull="true"/>
+            <column name="updated_at" type="timestamp" notnull="true"/>
+            <column name="is_deleted" type="boolean" defaultValue="false" notnull="true"/>
+            <uniqueConstraint name="uq_friendships_friendship_id" columnNames="friendship_id" oneToOne="false" nullableColumns="friendship_id"/>
+        </createTable>
+    </changeSet>
+</migration>

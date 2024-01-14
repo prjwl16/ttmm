@@ -2,6 +2,7 @@ package ttmm.database.models;
 
 
 import io.ebean.annotation.JsonIgnore;
+import io.ebean.annotation.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "groups")
 public class Group extends BaseModel {
+    @NotNull
     private String name;
     private String description;
     private String avatar;

@@ -11,6 +11,7 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import lombok.extern.slf4j.Slf4j;
 import ttmm.controllers.CommonController;
+import ttmm.database.enums.Role;
 import ttmm.database.repos.UserRepo;
 import ttmm.middlewares.Jwt;
 import ttmm.utils.ConfigManager;
@@ -60,8 +61,6 @@ public enum AuthRoutes implements SubRouterProtocol, CommonController {
 
             Credentials credentials = new Oauth2Credentials(put);
 
-            System.out.println(put.encodePrettily());
-
             //Authenticate user with google
             // 1) If user exists in DB then create a token with email and id and then redirect to front end with token
             // 2) If user does not exist in DB then create a new user and then create a token with email and id and then redirect to front end with token
@@ -69,35 +68,35 @@ public enum AuthRoutes implements SubRouterProtocol, CommonController {
             // TODO: Come back and learn how it actually works
             authProvider.authenticate(credentials)
                 .onSuccess(user -> {
-                    String email = user.principal().getString("email");
-                    String firstName = user.principal().getString("given_name");
-                    String lastName = user.principal().getString("family_name");
-                    String picture = user.principal().getString("picture");
-
-                    UserRepo.INSTANCE.getUserByEmailFuture(email)
-                        .thenComposeAsync(newUser -> {
-                            if (newUser == null) {
-                                return UserRepo.INSTANCE.createUserFuture(email, firstName, lastName, picture);
-                            } else {
-                                return CompletableFuture.completedFuture(newUser);
-                            }
-                        }).thenApplyAsync(userExisted -> {
-                            String token = Jwt.INSTANCE.generateToken(email, userExisted.getId());
-                            ctx.response().putHeader("Location", frontEndUriTokenRedirect + token).setStatusCode(302).end();
-                            return userExisted;
-                        }).exceptionally(throwable -> {
-                            log.error("Error creating user", throwable);
-                            ctx.response().putHeader("Location", frontEndUriErrorRedirect).setStatusCode(302).end();
-                            return null;
-                        });
-                }).onFailure(error -> {
-                    error.printStackTrace();
-                    log.error("Error authenticating user", error);
-                    ctx.response().putHeader("Location", frontEndUriErrorRedirect).setStatusCode(302).end();
+                    authProvider.userInfo(user).onSuccess(userInfo -> {
+                        String email = userInfo.getString("email");
+                        String firstName = userInfo.getString("given_name");
+                        String lastName = userInfo.getString("family_name");
+                        String picture = userInfo.getString("picture");
+                        UserRepo.INSTANCE.getUserByEmailFuture(email)
+                            .thenComposeAsync(newUser -> {
+                                if (newUser == null) {
+                                    return UserRepo.INSTANCE.createUserFuture(email, firstName, lastName, picture, Role.USER);
+                                } else {
+                                    return CompletableFuture.completedFuture(newUser);
+                                }
+                            }).thenApplyAsync(userExisted -> {
+                                String token = Jwt.INSTANCE.generateToken(email, userExisted.getId());
+                                ctx.response().putHeader("Location", frontEndUriTokenRedirect + token).setStatusCode(302).end();
+                                return userExisted;
+                            }).exceptionally(throwable -> {
+                                log.error("Error creating user", throwable);
+                                ctx.response().putHeader("Location", frontEndUriErrorRedirect).setStatusCode(302).end();
+                                return null;
+                            });
+                    }).onFailure(error -> {
+                        log.error("Error authenticating user", error);
+                        ctx.response().putHeader("Location", frontEndUriErrorRedirect).setStatusCode(302).end();
+                    });
                 });
         } catch (Exception e) {
-            log.error("Error handling auth callback", e);
-            fail(e.getMessage());
+            log.error("Error authenticating user", e);
+            ctx.response().putHeader("Location", ConfigManager.INSTANCE.getFrontEndUri() + ConfigManager.INSTANCE.getAuthConfig().getString("error_redirect")).setStatusCode(302).end();
         }
     }
 
