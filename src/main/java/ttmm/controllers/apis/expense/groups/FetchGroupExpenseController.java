@@ -1,11 +1,9 @@
-package ttmm.controllers.user;
+package ttmm.controllers.apis.expense.groups;
 
 import io.vertx.ext.web.RoutingContext;
 import ttmm.controllers.CommonController;
-import ttmm.middlewares.Jwt;
 
-public enum GetUserController implements CommonController {
-
+public enum FetchGroupExpenseController implements CommonController {
     INSTANCE;
 
     @Override

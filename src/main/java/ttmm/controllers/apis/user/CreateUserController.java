@@ -1,4 +1,4 @@
-package ttmm.controllers.user;
+package ttmm.controllers.apis.user;
 
 import io.vertx.ext.web.RoutingContext;
 import ttmm.controllers.CommonController;

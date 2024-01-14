@@ -1,8 +1,13 @@
 package ttmm.exceptions;
 
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class RoutingError extends RuntimeException{
-    private int statusCode=409;
+    private int statusCode=400;
 
     public RoutingError(String message, int statusCode){
         super(message);

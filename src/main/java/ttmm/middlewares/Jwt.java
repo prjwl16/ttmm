@@ -10,7 +10,6 @@ import io.vertx.ext.auth.jwt.JWTAuth;
 import io.vertx.ext.auth.jwt.JWTAuthOptions;
 import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
-import ttmm.controllers.CommonController;
 import ttmm.database.models.User;
 import ttmm.database.repos.UserRepo;
 import ttmm.utils.ConfigManager;
@@ -47,7 +46,7 @@ public enum Jwt {
         try {
             AtomicReference<User> userInfo = new AtomicReference<>();
             provider.authenticate(new TokenCredentials(token)).onSuccess(user -> {
-                userInfo.set(UserRepo.INSTANCE.getUserById(user.principal().getLong("id")));
+                userInfo.set(UserRepo.INSTANCE.getBasicDetails(user.principal().getLong("id"), null));
             }).onFailure(error -> {
                 throw new RuntimeException("Token is invalid");
             });
@@ -64,35 +63,21 @@ public enum Jwt {
                 throw new RuntimeException("Token is required");
             }
             token = token.replace("Bearer ", "");
-            try {
-                User userData = isValidToken(token);
-                if (userData == null)
-                    throw new RuntimeException("User not found");
-                ctx.put("user", userData);
-            } catch (Exception e) {
-                throw new RuntimeException(e.getMessage());
-            }
+
+            User userData = isValidToken(token);
+            if (userData == null)
+                throw new RuntimeException("User not found");
+            userData.setUserGroups(null);
+            userData.setCategories(null);
+            userData.setUserTransactions(null);
+            ctx.put("user", userData);
             return ctx;
+        }).doOnError(err -> {
+            ResponseHelper.INSTANCE.handleError(context, err);
         }).subscribe(
             RoutingContext::next,
-            error -> ResponseHelper.INSTANCE.writeJsonResponse(context, new Response(error.getMessage(), "", 400, false))
+            error -> ResponseHelper.INSTANCE.writeJsonResponse(context, new Response(error.getMessage(), null, 400, false))
         ).dispose();
-    }
-
-
-    public void handleMiddleware(RoutingContext context, CommonController controller) {
-        String token = context.request().getHeader("Authorization");
-        if (token == null) {
-            throw new RuntimeException("Token is required");
-        }
-        token = token.replace("Bearer ", "");
-        try {
-            User userData = isValidToken(token);
-            context.put("user", userData);
-            controller.handle(context);
-        } catch (Exception e) {
-            throw new RuntimeException("Token is invalid");
-        }
     }
 
 

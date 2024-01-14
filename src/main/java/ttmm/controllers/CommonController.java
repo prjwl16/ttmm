@@ -11,4 +11,8 @@ public interface CommonController {
     default void fail(String e) throws RoutingError {
         throw new RoutingError(e);
     }
+
+    default void fail(String e, int status) throws RoutingError {
+        throw new RoutingError(e, status);
+    }
 }

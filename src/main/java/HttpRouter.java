@@ -2,7 +2,7 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.CorsHandler;
 import lombok.extern.slf4j.Slf4j;
-import ttmm.controllers.apis.Apis;
+import ttmm.controllers.apis.ApiRouter;
 import ttmm.controllers.auth.AuthRoutes;
 import ttmm.utils.ConfigManager;
 
@@ -31,34 +31,13 @@ public class HttpRouter extends AbstractVerticle {
                 .allowedHeader("Authorization")
             );
 
-            router.get("/").handler(req -> {
-                req.response()
-                    .putHeader("content-type", "text/plain")
-                    .end("..Hello from Vert.x");
-            });
-            router.get("/health").handler(req -> {
-                req.response()
-                    .putHeader("content-type", "text/plain")
-                    .end("OK??");
-            });
-
+            router.get("/").handler(req -> req.response().putHeader("content-type", "text/plain").end("Hello from Vert.x"));
             router.route("/oauth/*").subRouter(AuthRoutes.INSTANCE.router(vertx));
             router.route("/play/*").subRouter(Playground.INSTANCE.router(vertx));
+            router.route("/api/*").subRouter(ApiRouter.INSTANCE.router(vertx)); //All the APIs will need to be authorized with JWT
 
-            //All the APIs will need to be authorized with JWT
-            router.route("/api/*").subRouter(Apis.INSTANCE.router(vertx));
-
-
-            router.errorHandler(500, routingContext -> {
-                routingContext.response().setStatusCode(500).end("Internal Server Error");
-            });
-
-            router.errorHandler(404, routingContext -> {
-                routingContext.response().setStatusCode(404).end("Not Found");
-            });
-
+            router.errorHandler(404, routingContext -> routingContext.response().setStatusCode(404).end("Not Found"));
             vertx.createHttpServer().requestHandler(router).listen(ConfigManager.INSTANCE.getPort());
-
             log.info("Server started on port {}", ConfigManager.INSTANCE.getPort());
 
         } catch (Exception e) {

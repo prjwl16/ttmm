@@ -50,4 +50,14 @@ public class User extends BaseModel {
     @JsonIgnore
     private List<UserGroup> userGroups;
 
+
+    public User(String email, String firstName, String lastName, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.avatar = avatar;
+        this.googleAuthId = googleAuthId;
+        this.role = role;
+    }
+
 }

@@ -81,13 +81,13 @@ public enum AuthRoutes implements SubRouterProtocol, CommonController {
                                     return CompletableFuture.completedFuture(newUser);
                                 }
                             }).thenApplyAsync(userExisted -> {
+                                log.info("User created/exists: {}", userExisted);
                                 String token = Jwt.INSTANCE.generateToken(email, userExisted.getId());
                                 ctx.response().putHeader("Location", frontEndUriTokenRedirect + token).setStatusCode(302).end();
                                 return userExisted;
                             }).exceptionally(throwable -> {
                                 log.error("Error creating user", throwable);
-                                ctx.response().putHeader("Location", frontEndUriErrorRedirect).setStatusCode(302).end();
-                                return null;
+                                throw new RuntimeException(throwable);
                             });
                     }).onFailure(error -> {
                         log.error("Error authenticating user", error);

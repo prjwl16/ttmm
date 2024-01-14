@@ -31,4 +31,11 @@ public class Friendship extends BaseModel {
     @DbDefault("PENDING")
     private FriendshipStatus status;
 
+
+    public Friendship(Long userId, Long friendId, FriendshipStatus status) {
+        this.userId = userId;
+        this.friendId = friendId;
+        this.status = status;
+    }
+
 }

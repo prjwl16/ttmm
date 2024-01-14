@@ -1,4 +1,4 @@
-package ttmm.controllers.user;
+package ttmm.controllers.apis.user;
 
 
 import io.reactivex.rxjava3.core.Single;
@@ -6,7 +6,6 @@ import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
 import ttmm.controllers.CommonController;
 import ttmm.database.models.User;
-import ttmm.middlewares.Jwt;
 import ttmm.middlewares.ResponseHelper;
 import ttmm.utils.Response;
 
@@ -16,11 +15,12 @@ public enum FetchUserController implements CommonController {
     INSTANCE;
 
     public void handle(RoutingContext event) {
+        log.info("Fetching user");
         try {
             Single.just(event).map(this::map).subscribe(
-                response -> ResponseHelper.INSTANCE.writeJsonResponse(event, new Response("User fetched successfully", response, 200, true)),
+                user -> ResponseHelper.INSTANCE.writeJsonResponse(event, new Response("User fetched successfully", user, 200, true)),
                 error -> {
-                    ResponseHelper.INSTANCE.writeJsonResponse(event, new Response(error.getMessage(), "", 400, false));
+                    ResponseHelper.INSTANCE.handleError(event, error);
                 }
             ).dispose();
         } catch (Exception e) {
