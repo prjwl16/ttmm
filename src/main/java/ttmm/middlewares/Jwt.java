@@ -72,8 +72,6 @@ public enum Jwt {
             userData.setUserTransactions(null);
             ctx.put("user", userData);
             return ctx;
-        }).doOnError(err -> {
-            ResponseHelper.INSTANCE.handleError(context, err);
         }).subscribe(
             RoutingContext::next,
             error -> ResponseHelper.INSTANCE.writeJsonResponse(context, new Response(error.getMessage(), null, 400, false))

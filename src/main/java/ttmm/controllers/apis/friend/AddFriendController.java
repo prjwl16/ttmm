@@ -28,18 +28,8 @@ public enum AddFriendController implements CommonController {
 
     }
 
-    /*
-         check if user exists
-         if yes, add to friend list with status pending
-         if no, send email to user to join the app
-
-         @param event
-        @return response
-
-     */
-
     private Response map(RoutingContext event) {
-        Response response = new Response();
+        Response response;
         JsonObject jsonObject = event.body().asJsonObject();
         String email = jsonObject.getString("emailId");
         User friend = UserRepo.INSTANCE.getUserByEmail(email);

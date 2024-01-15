@@ -17,14 +17,13 @@ public enum SearchUserByEmail implements CommonController {
     @Override
     public void handle(RoutingContext event) {
         Single.just(event)
-            .map(this::searchUserByEmail)
-            .doOnError(err -> ResponseHelper.INSTANCE.handleError(event, err))
-            .subscribe(user -> {
-                ResponseHelper.INSTANCE.writeJsonResponse(event, new Response("User found", user, 200, true));
-            }).dispose();
+            .map(this::map).subscribe(
+                user -> ResponseHelper.INSTANCE.writeJsonResponse(event, new Response("User found", user, 200, true)),
+                error -> ResponseHelper.INSTANCE.handleError(event, error)
+            ).dispose();
     }
 
-    private User searchUserByEmail(RoutingContext event) {
+    private User map(RoutingContext event) {
         String email = event.request().getParam("email");
         User user = UserRepo.INSTANCE.getBasicDetails(null, email);
         if(user == null)

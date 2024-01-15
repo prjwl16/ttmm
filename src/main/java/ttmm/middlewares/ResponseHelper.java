@@ -15,7 +15,7 @@ public enum ResponseHelper {
         context.response()
             .putHeader("content-type", "application/json")
             .end(Mapper.INSTANCE.getGson().toJson(response));
-        System.out.println("Response sent ");
+        log.info("Response sent");
     }
 
     public void handleError(RoutingContext context, Throwable error) {
@@ -25,6 +25,7 @@ public enum ResponseHelper {
             }else {
                 writeError(context, 500, "Oops, it's on us..!");
             }
+//            log.error("Error while processing request ------- ", error);
         }else{
             log.error("Response already sent");
         }

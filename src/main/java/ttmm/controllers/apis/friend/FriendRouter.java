@@ -11,9 +11,9 @@ public enum FriendRouter implements SubRouterProtocol {
     public Router router(Vertx vertx) {
         Router router = Router.router(vertx);
 
+        router.get("/invite/:email").handler(InviteFriendController.INSTANCE::handle);
         router.post().handler(AddFriendController.INSTANCE::handle);
         router.get().handler(FetchFriendController.INSTANCE::handle);
-        router.get("/invite/:email").handler(InviteFriendController.INSTANCE::handle);
 
         return router;
     }

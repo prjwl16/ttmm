@@ -3,6 +3,7 @@ package ttmm.controllers;
 import io.vertx.ext.web.RoutingContext;
 import ttmm.exceptions.RoutingError;
 
+@FunctionalInterface
 public interface CommonController {
 
 
