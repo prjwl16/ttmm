@@ -18,19 +18,20 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Table(name = "user_transactions")
 public class UserTransaction extends BaseModel {
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "transaction_id")
-    private Transaction transaction;
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private User creator;
 
     @ManyToOne
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
+
+    @ManyToOne
     @JoinColumn(name = "payer_id")
     private User payer;
+
+    @ManyToOne
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
 }

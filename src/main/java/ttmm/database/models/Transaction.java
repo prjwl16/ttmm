@@ -11,6 +11,7 @@ import ttmm.database.enums.Currency;
 import ttmm.database.enums.TransactionType;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -21,8 +22,8 @@ import javax.persistence.*;
 public class Transaction extends BaseModel {
 
     private String description;
-    private String amount;
-    private String date;
+    private double amount=0.0;
+    private Date date;
 
     @Enumerated(EnumType.STRING)
     @DbDefault("EXPENSE")

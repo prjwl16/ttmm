@@ -17,7 +17,8 @@ public enum SearchUserByEmail implements CommonController {
     @Override
     public void handle(RoutingContext event) {
         Single.just(event)
-            .map(this::map).subscribe(
+            .map(this::map)
+            .subscribe(
                 user -> ResponseHelper.INSTANCE.writeJsonResponse(event, new Response("User found", user, 200, true)),
                 error -> ResponseHelper.INSTANCE.handleError(event, error)
             ).dispose();

@@ -13,7 +13,6 @@ public enum FriendExpenseRouter implements SubRouterProtocol {
 
         router.post().handler(AddExpense.INSTANCE::handle);
 
-
         return router;
     }
 }

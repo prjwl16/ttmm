@@ -36,9 +36,9 @@ public class User extends BaseModel {
     @Enumerated(EnumType.STRING)
     @DbDefault("USER")
     @NotNull
-    private Role role;
+    private Role role=Role.USER;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "creator")
     @JsonIgnore
     private List<UserTransaction> userTransactions;
 
