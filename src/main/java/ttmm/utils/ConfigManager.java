@@ -36,7 +36,6 @@ public enum ConfigManager {
         return config.getString("ENV");
     }
 
-
     public String getJwtSecret() {
         return config.getString("jwt_secret");
     }

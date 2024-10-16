@@ -12,8 +12,8 @@ import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
 import ttmm.database.models.User;
 import ttmm.database.repos.UserRepo;
+import ttmm.exceptions.RoutingError;
 import ttmm.utils.ConfigManager;
-import ttmm.utils.Response;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -57,25 +57,33 @@ public enum Jwt {
     }
 
     public void validateToken(RoutingContext context) {
-        Single.just(context).map(ctx -> {
+        Single.just(context)
+            .map(this::map)
+            .subscribe(
+                RoutingContext::next,
+                error -> ResponseHelper.INSTANCE.handleError(context, error)
+            ).dispose();
+    }
+
+    private RoutingContext map(RoutingContext ctx) {
+        try {
             String token = ctx.request().getHeader("Authorization");
             if (token == null) {
-                throw new RuntimeException("Token is required");
+                throw new RoutingError("Token is required");
             }
             token = token.replace("Bearer ", "");
 
             User userData = isValidToken(token);
             if (userData == null)
-                throw new RuntimeException("User not found");
+                throw new RoutingError("User not found");
             userData.setUserGroups(null);
             userData.setCategories(null);
             userData.setUserTransactions(null);
             ctx.put("user", userData);
             return ctx;
-        }).subscribe(
-            RoutingContext::next,
-            error -> ResponseHelper.INSTANCE.writeJsonResponse(context, new Response(error.getMessage(), null, 400, false))
-        ).dispose();
+        } catch (Exception e) {
+            throw new RoutingError(e.getMessage());
+        }
     }
 
 

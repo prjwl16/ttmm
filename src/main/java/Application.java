@@ -24,7 +24,7 @@ public class Application extends AbstractVerticle {
     }
 
     @Override
-    public void start() throws Exception {
+    public void start() {
         try {
             super.start();
             initialize();

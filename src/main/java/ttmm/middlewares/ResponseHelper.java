@@ -34,6 +34,7 @@ public enum ResponseHelper {
     void writeError(RoutingContext context, int statusCode, String message) {
         context.response()
             .putHeader("content-type", "application/json")
+            .setStatusCode(statusCode)
             .end(Mapper.INSTANCE.getGson().toJson(new Response(message, statusCode,false)));
     }
 

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Response {
-    private String message;
+    private String message="Data fetched successfully";
     private Object data="";
     private int status=200;
     private boolean success=true;

@@ -21,7 +21,8 @@ public enum AddFriendController implements CommonController {
     public void handle(RoutingContext event) {
 
         Single.just(event)
-            .map(this::map).subscribe(
+            .map(this::map)
+            .subscribe(
                 response -> ResponseHelper.INSTANCE.writeJsonResponse(event, response),
                 error -> ResponseHelper.INSTANCE.handleError(event, error)
             ).dispose();
