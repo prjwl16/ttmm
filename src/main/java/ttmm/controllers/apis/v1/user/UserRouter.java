@@ -1,4 +1,4 @@
-package ttmm.controllers.apis.user;
+package ttmm.controllers.apis.v1.user;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;

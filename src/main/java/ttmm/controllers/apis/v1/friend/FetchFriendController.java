@@ -1,4 +1,4 @@
-package ttmm.controllers.apis.friend;
+package ttmm.controllers.apis.v1.friend;
 
 import io.vertx.ext.web.RoutingContext;
 import ttmm.controllers.CommonController;

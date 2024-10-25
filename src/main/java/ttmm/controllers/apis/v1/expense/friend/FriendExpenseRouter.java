@@ -1,4 +1,4 @@
-package ttmm.controllers.apis.expense.friend;
+package ttmm.controllers.apis.v1.expense.friend;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;

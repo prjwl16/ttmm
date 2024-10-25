@@ -1,4 +1,4 @@
-package ttmm.controllers.apis.friend;
+package ttmm.controllers.apis.v1.friend;
 
 import io.reactivex.rxjava3.core.Single;
 import io.vertx.ext.web.RoutingContext;
@@ -9,6 +9,7 @@ import ttmm.database.repos.UserRepo;
 import ttmm.middlewares.ResponseHelper;
 import ttmm.utils.Response;
 
+//TODO: pending
 public enum InviteFriendController implements CommonController {
     INSTANCE;
 

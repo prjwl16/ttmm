@@ -76,9 +76,9 @@ public enum Jwt {
             User userData = isValidToken(token);
             if (userData == null)
                 throw new RoutingError("User not found");
-            userData.setUserGroups(null);
-            userData.setCategories(null);
-            userData.setUserTransactions(null);
+//            userData.setUserGroups(null);
+//            userData.setCategories(null);
+//            userData.setUserTransactions(null);
             ctx.put("user", userData);
             return ctx;
         } catch (Exception e) {

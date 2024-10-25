@@ -1,4 +1,4 @@
-package ttmm.controllers.apis.user;
+package ttmm.controllers.apis.v1.user;
 
 
 import io.reactivex.rxjava3.core.Single;
@@ -19,9 +19,7 @@ public enum FetchUserController implements CommonController {
         try {
             Single.just(event).map(this::map).subscribe(
                 user -> ResponseHelper.INSTANCE.writeJsonResponse(event, new Response("User fetched successfully", user, 200, true)),
-                error -> {
-                    ResponseHelper.INSTANCE.handleError(event, error);
-                }
+                error -> ResponseHelper.INSTANCE.handleError(event, error)
             ).dispose();
         } catch (Exception e) {
             log.error("Error fetching user " + e.getMessage());

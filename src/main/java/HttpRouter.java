@@ -1,5 +1,6 @@
 import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import lombok.extern.slf4j.Slf4j;
 import ttmm.controllers.apis.ApiRouter;
@@ -32,8 +33,9 @@ public class HttpRouter extends AbstractVerticle {
             );
 
             router.get("/").handler(req -> req.response().putHeader("content-type", "text/plain").end("Hello from Vert.x"));
+            router.route().handler(BodyHandler.create());
             router.route("/oauth/*").subRouter(AuthRoutes.INSTANCE.router(vertx));
-            router.route("/play/*").subRouter(Playground.INSTANCE.router(vertx));
+            router.route("/play/*").subRouter(Playground.INSTANCE.router(vertx)); //TODO: just to play around
             router.route("/api/*").subRouter(ApiRouter.INSTANCE.router(vertx)); //All the APIs will need to be authorized with JWT
 
             router.errorHandler(404, routingContext -> routingContext.response().setStatusCode(404).end("Not Found"));

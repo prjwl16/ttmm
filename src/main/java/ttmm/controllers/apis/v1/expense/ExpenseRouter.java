@@ -1,9 +1,9 @@
-package ttmm.controllers.apis.expense;
+package ttmm.controllers.apis.v1.expense;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;
-import ttmm.controllers.apis.expense.friend.FriendExpenseRouter;
-import ttmm.controllers.apis.expense.groups.GroupExpenseRouter;
+import ttmm.controllers.apis.v1.expense.friend.FriendExpenseRouter;
+import ttmm.controllers.apis.v1.expense.groups.GroupExpenseRouter;
 import ttmm.utils.SubRouterProtocol;
 
 public enum ExpenseRouter implements SubRouterProtocol {

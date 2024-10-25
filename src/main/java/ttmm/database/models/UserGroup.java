@@ -10,12 +10,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
-@Data
-@EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "user_groups")
+//@Entity
+//@Data
+//@EqualsAndHashCode(callSuper = true)
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Table(name = "user_groups")
+@Deprecated
 public class UserGroup extends BaseModel{
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -1,4 +1,4 @@
-package ttmm.controllers.apis.expense.groups;
+package ttmm.controllers.apis.v1.expense.groups;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;

@@ -1,10 +1,9 @@
-package ttmm.controllers.apis.user;
+package ttmm.controllers.apis.v1.expense.groups;
 
 import io.vertx.ext.web.RoutingContext;
 import ttmm.controllers.CommonController;
 
-public enum GetUserController implements CommonController {
-
+public enum FetchGroupExpenseController implements CommonController {
     INSTANCE;
 
     @Override

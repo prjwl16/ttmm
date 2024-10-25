@@ -33,9 +33,9 @@ public enum UserRepo {
         else
             user = userFinder.query().select("id, email, first_name, last_name, avatar, role").where().eq("id", id).findOne();
         if(user != null){
-            user.setUserTransactions(null);
-            user.setUserGroups(null);
-            user.setCategories(null);
+//            user.setUserTransactions(null);
+//            user.setUserGroups(null);
+//            user.setCategories(null);
         }
         return user;
     }

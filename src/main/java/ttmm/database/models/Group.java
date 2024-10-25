@@ -11,12 +11,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Data
-@EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "groups")
+//@Entity
+//@Data
+//@EqualsAndHashCode(callSuper = true)
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Table(name = "groups")
+@Deprecated
 public class Group extends BaseModel {
     @NotNull
     private String name;

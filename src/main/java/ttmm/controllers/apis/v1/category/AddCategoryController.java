@@ -1,4 +1,4 @@
-package ttmm.controllers.apis.category;
+package ttmm.controllers.apis.v1.category;
 
 import io.reactivex.rxjava3.core.Single;
 import io.vertx.core.json.JsonObject;

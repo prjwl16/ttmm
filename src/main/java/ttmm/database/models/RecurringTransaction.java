@@ -12,12 +12,13 @@ import javax.persistence.Table;
 import java.sql.Date;
 import java.util.List;
 
-@Entity
-@Data
-@EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "recurring_transactions")
+//@Entity
+//@Data
+//@EqualsAndHashCode(callSuper = true)
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Table(name = "recurring_transactions")
+@Deprecated
 public class RecurringTransaction extends BaseModel{
     private Date startDate;
     private Date endDate;

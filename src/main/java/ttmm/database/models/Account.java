@@ -11,12 +11,13 @@ import ttmm.database.enums.Currency;
 
 import javax.persistence.*;
 
-@EqualsAndHashCode(callSuper = true)
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "accounts")
+//@EqualsAndHashCode(callSuper = true)
+//@Entity
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Table(name = "accounts")
+@Deprecated
 public class Account extends BaseModel{
 
     private String name;

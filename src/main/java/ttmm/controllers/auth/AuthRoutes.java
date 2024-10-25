@@ -41,6 +41,7 @@ public enum AuthRoutes implements SubRouterProtocol, CommonController {
         authHandler.setupCallback(router.get("/callback"));
 
         router.route("/google").handler(authHandler).failureHandler(ctx -> {
+            System.out.println("Failed");
             ctx.response().end("error");
             fail(ctx.failure().getMessage());
         });
@@ -67,33 +68,31 @@ public enum AuthRoutes implements SubRouterProtocol, CommonController {
 
             // TODO: Come back and learn how it actually works
             authProvider.authenticate(credentials)
-                .onSuccess(user -> {
-                    authProvider.userInfo(user).onSuccess(userInfo -> {
-                        String email = userInfo.getString("email");
-                        String firstName = userInfo.getString("given_name");
-                        String lastName = userInfo.getString("family_name");
-                        String picture = userInfo.getString("picture");
-                        UserRepo.INSTANCE.getUserByEmailFuture(email)
-                            .thenComposeAsync(newUser -> {
-                                if (newUser == null) {
-                                    return UserRepo.INSTANCE.createUserFuture(email, firstName, lastName, picture, Role.USER);
-                                } else {
-                                    return CompletableFuture.completedFuture(newUser);
-                                }
-                            }).thenApplyAsync(userExisted -> {
-                                log.info("User created/exists: {}", userExisted);
-                                String token = Jwt.INSTANCE.generateToken(email, userExisted.getId());
-                                ctx.response().putHeader("Location", frontEndUriTokenRedirect + token).setStatusCode(302).end();
-                                return userExisted;
-                            }).exceptionally(throwable -> {
-                                log.error("Error creating user", throwable);
-                                throw new RuntimeException(throwable);
-                            });
-                    }).onFailure(error -> {
-                        log.error("Error authenticating user", error);
-                        ctx.response().putHeader("Location", frontEndUriErrorRedirect).setStatusCode(302).end();
-                    });
-                });
+                .onSuccess(user -> authProvider.userInfo(user).onSuccess(userInfo -> {
+                    String email = userInfo.getString("email");
+                    String firstName = userInfo.getString("given_name");
+                    String lastName = userInfo.getString("family_name");
+                    String picture = userInfo.getString("picture");
+                    UserRepo.INSTANCE.getUserByEmailFuture(email)
+                        .thenComposeAsync(newUser -> {
+                            if (newUser == null) {
+                                return UserRepo.INSTANCE.createUserFuture(email, firstName, lastName, picture, Role.USER);
+                            } else {
+                                return CompletableFuture.completedFuture(newUser);
+                            }
+                        }).thenApplyAsync(userExisted -> {
+                            log.info("User created/exists: {}", userExisted);
+                            String token = Jwt.INSTANCE.generateToken(email, userExisted.getId());
+                            ctx.response().putHeader("Location", frontEndUriTokenRedirect + token).setStatusCode(302).end();
+                            return userExisted;
+                        }).exceptionally(throwable -> {
+                            log.error("Error creating user", throwable);
+                            throw new RuntimeException(throwable);
+                        });
+                }).onFailure(error -> {
+                    log.error("Error authenticating user", error);
+                    ctx.response().putHeader("Location", frontEndUriErrorRedirect).setStatusCode(302).end();
+                }));
         } catch (Exception e) {
             log.error("Error authenticating user", e);
             ctx.response().putHeader("Location", ConfigManager.INSTANCE.getFrontEndUri() + ConfigManager.INSTANCE.getAuthConfig().getString("error_redirect")).setStatusCode(302).end();

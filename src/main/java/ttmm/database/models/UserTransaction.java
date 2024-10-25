@@ -11,12 +11,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
-@EqualsAndHashCode(callSuper = true)
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "user_transactions")
+//@EqualsAndHashCode(callSuper = true)
+//@Entity
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Table(name = "user_transactions")
+@Deprecated
 public class UserTransaction extends BaseModel {
 
     @ManyToOne

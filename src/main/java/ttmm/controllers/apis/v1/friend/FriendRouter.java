@@ -1,4 +1,4 @@
-package ttmm.controllers.apis.friend;
+package ttmm.controllers.apis.v1.friend;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;
@@ -12,6 +12,7 @@ public enum FriendRouter implements SubRouterProtocol {
         Router router = Router.router(vertx);
 
         router.get("/invite/:email").handler(InviteFriendController.INSTANCE::handle);
+        router.post("/respond").handler(RespondFriendShipRequest.INSTANCE::handle);
         router.post().handler(AddFriendController.INSTANCE::handle);
         router.get().handler(FetchFriendController.INSTANCE::handle);
 

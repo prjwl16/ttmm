@@ -2,25 +2,21 @@ package ttmm.database.models;
 
 import io.ebean.annotation.DbDefault;
 import io.ebean.annotation.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ttmm.database.enums.Currency;
+import ttmm.database.enums.PaymentMethod;
 
 import javax.persistence.*;
 import java.sql.Date;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "settlements")
 public class Settlement extends BaseModel {
-
     private double amount;
-
     @Enumerated(EnumType.STRING)
     @DbDefault("INR")
     @NotNull
@@ -29,19 +25,16 @@ public class Settlement extends BaseModel {
 
     //Relationships
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user_id;
 
     @ManyToOne
-    @JoinColumn(name = "payer_id")
-    private User payer;
+    @JoinColumn(name = "friend_id")
+    private User friendId;
 
-    @ManyToOne
-    @JoinColumn(name = "receiver_id")
-    private User receiver;
-
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    private Group group;
-
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method")
+    private PaymentMethod paymentMethod;
 
 }

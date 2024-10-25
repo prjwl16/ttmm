@@ -1,4 +1,4 @@
-package ttmm.controllers.apis.user;
+package ttmm.controllers.apis.v1.user;
 
 import io.reactivex.rxjava3.core.Single;
 import io.vertx.ext.web.RoutingContext;

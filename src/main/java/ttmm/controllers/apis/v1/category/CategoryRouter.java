@@ -1,4 +1,4 @@
-package ttmm.controllers.apis.category;
+package ttmm.controllers.apis.v1.category;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;
