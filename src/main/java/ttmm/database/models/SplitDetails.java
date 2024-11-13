@@ -14,6 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "split_details")
+@EqualsAndHashCode(callSuper = true)
 public class SplitDetails extends BaseModel{
 
     @Index(unique = true)

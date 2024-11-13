@@ -15,6 +15,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "settlements")
+@EqualsAndHashCode(callSuper = true)
 public class Settlement extends BaseModel {
     private double amount;
     @Enumerated(EnumType.STRING)

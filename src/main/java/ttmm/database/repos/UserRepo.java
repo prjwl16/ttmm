@@ -1,6 +1,5 @@
 package ttmm.database.repos;
 
-import io.reactivex.rxjava3.core.Single;
 import ttmm.database.SqlFinder;
 import ttmm.database.enums.Role;
 import ttmm.database.models.User;
@@ -32,7 +31,7 @@ public enum UserRepo {
             user = userFinder.query().select("id, email, first_name, last_name, avatar, role").where().eq("email", email).findOne();
         else
             user = userFinder.query().select("id, email, first_name, last_name, avatar, role").where().eq("id", id).findOne();
-        if(user != null){
+        if (user != null) {
 //            user.setUserTransactions(null);
 //            user.setUserGroups(null);
 //            user.setCategories(null);

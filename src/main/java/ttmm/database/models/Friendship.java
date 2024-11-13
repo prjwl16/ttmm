@@ -13,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "friendships")
+@EqualsAndHashCode(callSuper = true)
 public class Friendship extends BaseModel {
 
     @Column(name = "friendship_id")

@@ -16,6 +16,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "transactions")
+@EqualsAndHashCode(callSuper = true)
 public class Transaction extends BaseModel {
 
     private String description;

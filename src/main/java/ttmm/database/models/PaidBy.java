@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "paid_by")
+@EqualsAndHashCode(callSuper = true)
 public class PaidBy extends BaseModel{
 
     @Index(unique = true)

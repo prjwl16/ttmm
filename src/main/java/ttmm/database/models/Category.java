@@ -14,6 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "categories")
+@EqualsAndHashCode(callSuper = true)
 public class Category extends BaseModel {
     @NotNull
     private String name;
